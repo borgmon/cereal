@@ -878,12 +878,18 @@ struct LongitudinalPlan @0xe00b5b3eba12876c {
 
   solverExecutionTime @35 :Float32;
 
+  visionTurnControllerState @36 :VisionTurnControllerState;
+  visionTurnSpeed @37 :Float32;
+
   enum LongitudinalPlanSource {
     cruise @0;
     lead0 @1;
     lead1 @2;
     lead2 @3;
     e2e @4;
+    turn @5;
+    limit @6;
+    turnlimit @7;
   }
 
   # deprecated
@@ -918,6 +924,13 @@ struct LongitudinalPlan @0xe00b5b3eba12876c {
   struct GpsTrajectory {
     x @0 :List(Float32);
     y @1 :List(Float32);
+  }
+
+  enum VisionTurnControllerState {
+    disabled @0; # No predicted substancial turn on vision range or feature disabled.
+    entering @1; # A subsantial turn is predicted ahead, adapting speed to turn confort levels.
+    turning @2; # Actively turning. Managing acceleration to provide a roll on turn feeling.
+    leaving @3; # Road ahead straightens. Start to allow positive acceleration.
   }
 }
 
